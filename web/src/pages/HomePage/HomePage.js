@@ -1,7 +1,10 @@
+import { useAuth } from '@redwoodjs/auth'
 import { Link, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 
+import SignoutBtn from 'src/components/SignoutBtn/SignoutBtn'
 const HomePage = () => {
+  const { isAuthenticated } = useAuth()
   return (
     <>
       <MetaTags title="Home" description="Home page" />
@@ -14,8 +17,16 @@ const HomePage = () => {
       </p>
 
       <p>
-        <Link to={routes.dashboard()}>DashboardPage</Link>
+        <Link to={routes.landing()}>LandingPage</Link>
       </p>
+      {isAuthenticated ? (
+        <SignoutBtn />
+      ) : (
+        <>
+          <Link to={routes.signup()}>Sign Up</Link>
+          <Link to={routes.signin()}>Sign In</Link>
+        </>
+      )}
     </>
   )
 }
