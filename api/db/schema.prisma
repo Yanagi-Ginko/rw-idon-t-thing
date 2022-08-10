@@ -12,20 +12,13 @@ generator client {
 // to create migrations for them and apply to your dev DB.
 // TODO: Please remove the following example:
 model User {
-  id        Int        @id @default(autoincrement())
-  uuid      String     @unique
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @default(now())
-  userRoles UserRole[]
-}
-
-model UserRole {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
-  name      String
-  user      User?    @relation(fields: [userId], references: [id])
-  userId    Int?
-
-  @@unique([name, userId])
+  id                  String    @id @unique @default(uuid())
+  name                String?
+  email               String    @unique
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @default(now())
+  hashedPassword      String
+  salt                String
+  resetToken          String?
+  resetTokenExpiresAt DateTime?
 }
